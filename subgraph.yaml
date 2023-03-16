@@ -1,0 +1,39 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: SURGE
+    network: bsc
+    source:
+      address: "0x9f19c8e321bD14345b797d43E01f0eED030F5Bff"
+      abi: SURGE
+      startBlock: 24726000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Token
+        - Bought
+        - Sold
+        - Transfer
+        - Surgeswap
+        - User
+        - SurgeswapDayData
+        - TokenDayData
+        - pair
+        - ticker
+      abis:
+        - name: SURGE
+          file: ./abis/SURGE.json
+        - name: SRG20
+          file: ./abis/SRG20.json
+      eventHandlers:
+        - event: Bought(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleBought
+        - event: Sold(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleSold
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/core.ts

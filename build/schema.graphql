@@ -1,0 +1,117 @@
+type Bought @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  tokens: BigInt! # uint256
+  beans: BigInt! # uint256
+  dollarBuy: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Sold @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  tokens: BigInt! # uint256
+  beans: BigInt! # uint256
+  dollarSell: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+
+type Surgeswap @entity {
+  # $SRG address
+  id: ID!
+
+  # pair info
+  pairCount: Int!
+
+  # total volume
+  totalVolumeUSD: BigDecimal!
+
+  # total liquidity
+  totalLiquidityUSD: BigDecimal!
+  totalLiquidityETH: BigDecimal!
+  totalLiquiditySRG: BigDecimal!
+
+  # transactions
+  txCount: BigInt!
+}
+
+type Token @entity {
+  # token address
+  id: ID!
+
+  # mirrored from the smart contract
+  symbol: String!
+  name: String!
+  decimals: BigInt!
+
+  # used for other stats like marketcap
+  totalSupply: BigInt!
+
+  # token specific volume
+  tradeVolumeUSD: BigDecimal!
+
+  # transactions across all pairs
+  txCount: BigInt!
+
+  # liquidity for either SRG or ETH (For SRG only)
+  totalLiquiditySRG: BigDecimal!
+  totalLiquidityETH: BigDecimal!
+  liquidityUSD: BigDecimal!
+  theoreticalLiquidity: BigDecimal!
+
+  # derived fields
+  tokenDayData: [TokenDayData!]! @derivedFrom(field: "token")
+}
+
+
+type User @entity {
+  id: ID!
+  usdSwapped: BigDecimal!
+}
+
+
+type SurgeswapDayData @entity {
+  id: ID! # timestamp rounded to current day by dividing by 86400
+  date: Int!
+
+  dailyVolumeUSD: BigDecimal!
+
+  totalLiquidityUSD: BigDecimal!
+
+  txCount: BigInt!
+}
+
+
+type TokenDayData @entity {
+  id: ID! # Token-date divided by 86400
+  date: Int!
+  token: Token!
+
+  # volume stats
+  dailyVolumeUSD: BigDecimal!
+  dailyTxns: BigInt!
+
+  # liquidity stats
+  totalLiquidityUSD: BigDecimal!
+
+  # price stats
+  priceUSD: BigDecimal!
+}
+
