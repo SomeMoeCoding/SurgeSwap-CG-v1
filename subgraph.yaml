@@ -14,14 +14,10 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Token
         - Bought
         - Sold
         - Transfer
         - Surgeswap
-        - User
-        - SurgeswapDayData
-        - TokenDayData
         - pair
         - ticker
       abis:

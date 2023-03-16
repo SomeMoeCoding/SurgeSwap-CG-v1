@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import {  BigInt, BigDecimal, Address } from '@graphprotocol/graph-ts'
-import {  Token} from '../generated/schema'
+import {  ticker} from '../generated/schema'
 
 import {SRG20 } from '../generated/SURGE/SRG20'
 
@@ -65,7 +65,7 @@ export function isNullEthValue(value: string): boolean {
 
 export function checkValidToken(address: Address): boolean {
   // Bind the contract to the address that emitted the event
-if (Token.load(address.toHexString()) != null) {
+if (ticker.load(address.toHexString()) != null) {
     return true
 }
 

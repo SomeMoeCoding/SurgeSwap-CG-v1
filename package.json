@@ -1,13 +1,13 @@
 {
-  "name": "surgeswap-v1-bsc",
+  "name": "surgeswap-v1-cg-bsc",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ somemoecoding/surgeswap-v1-bsc",
-    "create-local": "graph create --node http://localhost:8020/ somemoecoding/surgeswap-v1-bsc",
-    "remove-local": "graph remove --node http://localhost:8020/ somemoecoding/surgeswap-v1-bsc",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 somemoecoding/surgeswap-v1-bsc",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ somemoecoding/surgeswap-v1-cg-bsc",
+    "create-local": "graph create --node http://localhost:8020/ somemoecoding/surgeswap-v1-cg-bsc",
+    "remove-local": "graph remove --node http://localhost:8020/ somemoecoding/surgeswap-v1-cg-bsc",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 somemoecoding/surgeswap-v1-cg-bsc",
     "test": "graph test"
   },
   "dependencies": {
