@@ -250,7 +250,7 @@ if( srg20Ticker===null){
   srg20Ticker.pool_id = address.toHexString().concat("_").concat(FACTORY_ADDRESS)
   srg20Ticker.liquidity_in_usd = ZERO_BD
 }
-if(srgContract.getLiquidity()>ZERO_BI){
+if(srgContract.getLiquidity()>ZERO_BI && srgContract.getLiquidity().minus(event.params.value) > ZERO_BI){
 let srgPrice = contract.getBNBPrice().times(contract.calculatePrice())
 let after = srgContract.liqConst().div(srgContract.getLiquidity())
 let before = srgContract.liqConst().div(srgContract.getLiquidity().minus(event.params.value))
