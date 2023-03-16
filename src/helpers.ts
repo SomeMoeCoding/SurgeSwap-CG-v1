@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import {  BigInt, BigDecimal, Address } from '@graphprotocol/graph-ts'
+import {  BigInt, BigDecimal, Address, bigInt } from '@graphprotocol/graph-ts'
 import {  ticker} from '../generated/schema'
 
 import {SRG20 } from '../generated/SURGE/SRG20'
@@ -73,7 +73,8 @@ let contract = SRG20.bind(address)
 
 let srgPrice = contract.try_getSRGPrice()
 if(srgPrice.reverted) {return false}
-
+// let tryGetOut = contract.try_getTokenAmountOut(bigInt.fromString("100000000000"))
+// if(tryGetOut.reverted) {return false}
 let trySymbol = contract.try_symbol()
 if(trySymbol.reverted) {return false}
 let tryName = contract.try_name()

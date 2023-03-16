@@ -12,7 +12,7 @@ import {
 import { FACTORY_ADDRESS,ADDRESS_DEAD,ADDRESS_ZERO, checkValidToken } from "./helpers"
 
 import{updateSurgeswapBought,
-    updateSurgeswapSold, updateSurgeswapTransferTo,updateSurgeswapTransferFrom,updatePair,updatePairBought,updateTicker,updateTickerBought,updateTickerSold} from "./updates"
+    updateSurgeswapSold, updateSurgeswapTransferTo,updateSurgeswapTransferFrom,updatePair,updatePairBought,updateTickerFrom,updateTickerTo,updateTickerBought,updateTickerSold} from "./updates"
 
 export function handleBought(event: BoughtEvent): void {
 
@@ -80,20 +80,20 @@ if(addressFrom != ADDRESS_DEAD.toLowerCase() && addressFrom != ADDRESS_ZERO.toLo
   && addressTo != ADDRESS_DEAD.toLowerCase() && addressTo != ADDRESS_ZERO.toLowerCase() && addressTo != FACTORY_ADDRESS.toLowerCase()){
     if(checkValidToken(event.params.from)&& !checkValidToken(event.params.to)){
       updateSurgeswapTransferFrom(event)
-      updateTicker(event.params.from,event)
+      updateTickerFrom(event.params.from,event)
       updatePair(event.params.from)
     }
 
-    else if(checkValidToken(event.params.to)&& !checkValidToken(event.params.from)){
+    else if(checkValidToken(event.params.to) && !checkValidToken(event.params.from)){
       updateSurgeswapTransferTo(event)
-      updateTicker(event.params.to,event)
+      updateTickerTo(event.params.to,event)
       updatePair(event.params.to)
 
     }
 
-    else if(checkValidToken(event.params.to)&& checkValidToken(event.params.from)){
+    else if(checkValidToken(event.params.to) && checkValidToken(event.params.from)){
 
-      updateTicker(event.params.to,event)
+      updateTickerTo(event.params.to,event)
       updatePair(event.params.to)
       updatePair(event.params.from)
 
