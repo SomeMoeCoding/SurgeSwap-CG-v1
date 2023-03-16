@@ -75,6 +75,8 @@ let srgPrice = contract.try_getSRGPrice()
 if(srgPrice.reverted) {return false}
 // let tryGetOut = contract.try_getTokenAmountOut(bigInt.fromString("100000000000"))
 // if(tryGetOut.reverted) {return false}
+let getLiqConst = contract.try_liqConst()
+if(getLiqConst.reverted) {return false}
 let trySymbol = contract.try_symbol()
 if(trySymbol.reverted) {return false}
 let tryName = contract.try_name()

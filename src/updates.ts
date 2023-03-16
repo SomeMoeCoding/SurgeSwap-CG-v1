@@ -235,6 +235,7 @@ export function updateTickerSold(event: soldEvent): void {
 }
 
 export function updateTickerTo(address: Address, event: transferEvent): void {
+
 let srg20Ticker = ticker.load(address.toHexString())
 let srgContract = SRG20.bind(address)
 let contract = surgeContract.bind(Address.fromString(FACTORY_ADDRESS))
@@ -249,16 +250,18 @@ if( srg20Ticker===null){
   srg20Ticker.pool_id = address.toHexString().concat("_").concat(FACTORY_ADDRESS)
   srg20Ticker.liquidity_in_usd = ZERO_BD
 }
+if(srgContract.getLiquidity()>ZERO_BI){
 let srgPrice = contract.getBNBPrice().times(contract.calculatePrice())
 let after = srgContract.liqConst().div(srgContract.getLiquidity())
 let before = srgContract.liqConst().div(srgContract.getLiquidity().minus(event.params.value))
 let newTargetVolume = before.minus(after)
 
-srg20Ticker.last_price = bigDecimal.fromString(srgContract.getLiquidity.toString()).div(bigDecimal.fromString(srgContract.balanceOf(address).toString())).div(bigDecimal.fromString("1000000000")).times(bigDecimal.fromString(srgContract.decimals().toString()))
+srg20Ticker.last_price = bigDecimal.fromString(srgContract.getLiquidity().toString()).times(bigDecimal.fromString(srgContract.getLiquidity().toString())).div(bigDecimal.fromString(srgContract.liqConst().toString())).div(bigDecimal.fromString("1000000000")).times(bigDecimal.fromString(srgContract.decimals().toString()))
 srg20Ticker.base_volume =  srg20Ticker.base_volume.plus(bigDecimal.fromString(newTargetVolume.toString()).div(bigDecimal.fromString('1'.concat('0'.repeat(srgContract.decimals())))))
 srg20Ticker.target_volume = srg20Ticker.target_volume.plus(bigDecimal.fromString(event.params.value.toString()).div(bigDecimal.fromString('1000000000')))
 srg20Ticker.liquidity_in_usd = bigDecimal.fromString(srgContract.getLiquidity().toString()).div(bigDecimal.fromString('1000000000')).times(bigDecimal.fromString(srgPrice.toString())).div(bigDecimal.fromString('1000000000000000000000000000'))
 srg20Ticker.save()
+}
 }
 
 export function updateTickerFrom(address: Address, event: transferEvent): void {
@@ -276,14 +279,18 @@ export function updateTickerFrom(address: Address, event: transferEvent): void {
     srg20Ticker.pool_id = address.toHexString().concat("_").concat(FACTORY_ADDRESS)
     srg20Ticker.liquidity_in_usd = ZERO_BD
   }
+
+  if(srgContract.getLiquidity()>ZERO_BI){
+
   let srgPrice = contract.getBNBPrice().times(contract.calculatePrice())
   let after = srgContract.liqConst().div(srgContract.getLiquidity())
   let before = srgContract.liqConst().div(srgContract.getLiquidity().plus(event.params.value))
   let newTargetVolume = after.minus(before)
   
-  srg20Ticker.last_price = bigDecimal.fromString(srgContract.getLiquidity.toString()).div(bigDecimal.fromString(srgContract.balanceOf(address).toString())).div(bigDecimal.fromString("1000000000")).times(bigDecimal.fromString(srgContract.decimals().toString()))
+  srg20Ticker.last_price = bigDecimal.fromString(srgContract.getLiquidity().toString()).times(bigDecimal.fromString(srgContract.getLiquidity().toString())).div(bigDecimal.fromString(srgContract.liqConst().toString())).div(bigDecimal.fromString("1000000000")).times(bigDecimal.fromString(srgContract.decimals().toString()))
   srg20Ticker.base_volume =  srg20Ticker.base_volume.plus(bigDecimal.fromString(newTargetVolume.toString()).div(bigDecimal.fromString('1'.concat('0'.repeat(srgContract.decimals())))))
   srg20Ticker.target_volume = srg20Ticker.target_volume.plus(bigDecimal.fromString(event.params.value.toString()).div(bigDecimal.fromString('1000000000')))
   srg20Ticker.liquidity_in_usd = bigDecimal.fromString(srgContract.getLiquidity().toString()).div(bigDecimal.fromString('1000000000')).times(bigDecimal.fromString(srgPrice.toString())).div(bigDecimal.fromString('1000000000000000000000000000'))
   srg20Ticker.save()
+}
   }
